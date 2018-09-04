@@ -184,13 +184,20 @@ function hasOwnProp(obj, propName) {
   return Object.hasOwnProperty.call(obj, propName);
 }
 
+function isStrict() {
+  return typeof process !== 'undefined' && process.env && process.env.HLS_PARSER_MODE === 'strict';
+}
+
+function nop() {}
+
 module.exports = {
+  isStrict,
   THROW,
-  ASSERT,
-  CONDITIONALASSERT,
-  PARAMCHECK,
-  CONDITIONALPARAMCHECK,
-  INVALIDPLAYLIST,
+  ASSERT: isStrict() ? ASSERT : nop,
+  CONDITIONALASSERT: isStrict() ? CONDITIONALASSERT : nop,
+  PARAMCHECK: isStrict() ? PARAMCHECK : nop,
+  CONDITIONALPARAMCHECK: isStrict() ? CONDITIONALPARAMCHECK : nop,
+  INVALIDPLAYLIST: isStrict() ? INVALIDPLAYLIST : nop,
   toNumber,
   hexToByteSequence,
   byteSequenceToHex,

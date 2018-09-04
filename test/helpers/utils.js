@@ -1,4 +1,5 @@
 const HLS = require('../..');
+const utils = require('../../utils.js');
 
 function parsePass(t, text) {
   let obj;
@@ -28,6 +29,9 @@ function bothPass(t, text) {
 }
 
 function parseFail(t, text) {
+  if (!utils.isStrict()) {
+    return t.true(true);
+  }
   try {
     HLS.parse(text);
   } catch (err) {

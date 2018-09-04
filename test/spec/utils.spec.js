@@ -11,6 +11,9 @@ test('utils.THROW', t => {
 });
 
 test('utils.ASSERT', t => {
+  if (!utils.isStrict()) {
+    return t.true(true);
+  }
   utils.ASSERT('No error occurred', 1, 2, 3);
   try {
     utils.ASSERT('Error occurred', 1, 2, false);
@@ -21,6 +24,9 @@ test('utils.ASSERT', t => {
 });
 
 test('utils.CONDITIONALASSERT', t => {
+  if (!utils.isStrict()) {
+    return t.true(true);
+  }
   utils.CONDITIONALASSERT([true, 1], [true, 2], [true, 3]);
   utils.CONDITIONALASSERT([false, 0], [false, 1], [false, 2]);
   try {
@@ -32,6 +38,9 @@ test('utils.CONDITIONALASSERT', t => {
 });
 
 test('utils.PARAMCHECK', t => {
+  if (!utils.isStrict()) {
+    return t.true(true);
+  }
   utils.PARAMCHECK(1, 2, 3);
   try {
     utils.PARAMCHECK(1, 2, undefined);
@@ -42,6 +51,9 @@ test('utils.PARAMCHECK', t => {
 });
 
 test('utils.CONDITIONALPARAMCHECK', t => {
+  if (!utils.isStrict()) {
+    return t.true(true);
+  }
   utils.CONDITIONALPARAMCHECK([true, 1], [true, 2], [true, 3]);
   utils.CONDITIONALPARAMCHECK([false, undefined], [false, 1], [false, 2]);
   try {
