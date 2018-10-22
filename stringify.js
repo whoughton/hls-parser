@@ -93,7 +93,7 @@ function buildVariant(lines, variant) {
     attrs.push(`URI="${variant.uri}"`);
   }
   if (variant.profile && !variant.codecs) {
-    variant.codecs = buildCodecsFromProfile(variant.profile)
+    variant.codecs = buildCodecs(variant.profile)
   }
   if (variant.codecs) {
     attrs.push(`CODECS="${variant.codecs}"`);
