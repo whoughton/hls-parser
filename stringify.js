@@ -92,9 +92,6 @@ function buildVariant(lines, variant) {
   if (variant.isIFrameOnly) {
     attrs.push(`URI="${variant.uri}"`);
   }
-  if (variant.profile && !variant.codecs) {
-    variant.codecs = buildCodecs(variant.profile)
-  }
   if (variant.codecs) {
     attrs.push(`CODECS="${variant.codecs}"`);
   }
@@ -138,57 +135,6 @@ function buildVariant(lines, variant) {
   if (!variant.isIFrameOnly) {
     lines.push(`${variant.uri}`);
   }
-}
-
-function buildCodecs(source) {
-  /*
-  source = {
-    audio: {codec: 'aac', profile: 'lc'},
-    video: {profile: 'Main', level: 31}
-  */
-  if (!source.audio || !source.video) {
-    return false
-  }
-  let failure = false
-
-  let audioMap = {
-    "AAC-LC": "mp4a.40.2",
-    "HE-AAC": "mp4a.40.5",
-    "MP3": "mp4a.40.34"
-  }
-
-  let videoMap = {
-    "BASELINE": "42",
-    "MAIN": "4d",
-    "HIGH": "64"
-  }
-
-  let level = parseFloat(source.video.level)
-  if (level < 10) {
-    level = Math.floor(level * 10)
-  }
-
-  let ouput = []
-  let audioKey = `${source.audio.codec.toUpperCase()}-${source.audio.profile.toUpperCase()}`
-  if (Object.keys(audioMap).indexOf(audioKey) >= 0) {
-    output.push(audioMap[audioKey])
-  } else {
-    failure = true
-  }
-
-  let videoString = "avc1."
-  if (Object.keys(videoMap).indexOf(source.video.profile) >= 0) {
-    videoString += videoMap[source.video.profile]
-  } else {
-    failure = true
-  }
-
-  videoString += "00"
-  videoString += parseInt(level, 10).toString(16)
-  output.push(videoString)
-
-  if (failure) { return false }
-  return output.join(',')
 }
 
 function buildRendition(lines, rendition) {
