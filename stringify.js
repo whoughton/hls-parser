@@ -205,6 +205,9 @@ function buildSegment(lines, segment) {
   if (segment.discontinuity) {
     lines.push(`#EXT-X-DISCONTINUITY`);
   }
+  if (segment.cueOut) {
+    lines.push(`#EXT-X-CUE-OUT:${segment.cueOut}`)
+  }
   if (segment.key) {
     buildKey(lines, segment.key);
   }
@@ -219,6 +222,9 @@ function buildSegment(lines, segment) {
   }
   lines.push(`#EXTINF:${segment.duration},${unescape(encodeURIComponent(segment.title || ''))}`);
   lines.push(`${segment.uri}`);
+  if (segment.cueIn) {
+    lines.push(`#EXT-X-CUE-IN`)
+  }
 }
 
 function buildMap(lines, map) {
